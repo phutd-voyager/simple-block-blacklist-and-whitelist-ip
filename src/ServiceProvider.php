@@ -21,6 +21,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     protected function registerMiddleware()
     {
         $this->app['router']->aliasMiddleware('ip-filter-blacklist', Middleware\IPFilterBlacklistMiddleware::class);
+        $this->app['router']->aliasMiddleware('ip-filter-whitelist', Middleware\IPFilterWhitelistMiddleware::class);
     }
 
     protected function registerServices()
