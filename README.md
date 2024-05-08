@@ -1,4 +1,4 @@
-# Simple Upload File
+# Simple block blacklist and whitelist IP
 
 [`PHP v8.2`](https://php.net)
 
@@ -7,19 +7,21 @@
 ## Installation
 
 ```bash
-composer require voyager-inc/simple-user-import-csv
+composer require voyager-inc/simple-block-blacklist-and-whitelist-ip
 ```
 
 - Publish provider
 ```bash
-php artisan vendor:publish --provider="VoyagerInc\SimpleUserImportCsv\SimpleUserImportCsvServiceProvider"
+php artisan vendor:publish --provider="VoyagerInc\SimpleBlockBlacklistAndWhiteListIp\ServiceProvider"
 ```
 
 ## Usage
 
-- Add more this line to `web.php` file
+- We have 2 new middleware with alias `ip-filter-whitelist` and `ip-filter-blacklist`
+
 
 ```bash
-...
-require __DIR__ . '/simple_user_import_csv.php';
+Route::get('/test', function () {
+    return 'Whitelist route';
+})->middleware(['ip-filter-whitelist']); // middleware(['ip-filter-blacklist']
 ```
