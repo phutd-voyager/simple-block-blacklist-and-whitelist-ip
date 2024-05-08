@@ -1,0 +1,31 @@
+{
+    "name": "voyager-inc/simple-block-blacklist-and-whitelist-ip",
+    "description": "Simple block ip depend on blacklist and whitelist ip",
+    "type": "library",
+    "keywords": ["upload-file", "simple-block-blacklist-and-whitelist-ip"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Phu Tran Dinh",
+            "email": "phutd@voyager-hcm.com"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "illuminate/support": "^11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "VoyagerInc\\SimpleBlockBlacklistAndWhiteListIp\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "VoyagerInc\\SimpleBlockBlacklistAndWhiteListIp\\ServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": false
+}
