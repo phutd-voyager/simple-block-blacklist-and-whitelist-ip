@@ -17,8 +17,31 @@ php artisan vendor:publish --provider="VoyagerInc\SimpleBlockBlacklistAndWhiteLi
 
 ## Usage
 
-- We have 2 new middleware with alias `ip-filter-whitelist` and `ip-filter-blacklist`
+- We have two new middleware with the aliases `ip-filter-whitelist` and `ip-filter-blacklist`
+- The `ip-filter-whitelist` middleware allows access only from whitelisted IPs.
+- The `ip-filter-blacklist` middleware always prevents access from blacklisted IPs.
+- We can update whitelist and blacklist in config `simple_block_blacklist_and_whitelist_ip.php` file
 
+```bash
+<?php
+
+return [
+    'block_ip_enable' => true,
+
+    'block_by' => 'config', // or database
+
+    'whitelist_ip' => [
+        //
+    ],
+
+    'blacklist_ip' => [
+        //
+    ],
+];
+
+```
+
+- Example
 
 ```bash
 Route::get('/test', function () {
