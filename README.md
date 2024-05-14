@@ -15,6 +15,13 @@ composer require voyager-inc/simple-block-blacklist-and-whitelist-ip
 php artisan vendor:publish --provider="VoyagerInc\SimpleBlockBlacklistAndWhiteListIp\ServiceProvider"
 ```
 
+Now you will see two migration files `create_simple_blacklist_ips_table.php` and `create_simple_whitelist_ips_table.php` in `database/migrations` folder
+
+- Run migration
+```bash
+php artisan migrate
+```
+
 ## Usage
 
 - We have two new middleware with the aliases `ip-filter-whitelist` and `ip-filter-blacklist`
