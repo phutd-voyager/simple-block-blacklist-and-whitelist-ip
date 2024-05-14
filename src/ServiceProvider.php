@@ -17,9 +17,9 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             __DIR__ . '/../config/simple_block_blacklist_and_whitelist_ip.php' => config_path('simple_block_blacklist_and_whitelist_ip.php'),
         ], 'simple-block-blacklist-and-whitelist-ip-config');
 
-        $this->publishesMigrations([
+        $this->loadMigrationsFrom([
             __DIR__.'/../database/migrations' => database_path('migrations'),
-        ], 'simple-block-blacklist-and-whitelist-ip-migrations');
+        ]);
 
         $this->registerMiddleware();
     }
