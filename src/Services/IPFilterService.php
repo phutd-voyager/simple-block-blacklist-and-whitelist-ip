@@ -32,6 +32,7 @@ class IPFilterService implements Interfaces\IPFilterServiceInterface
     {
         if ($this->dataProvider instanceof Interfaces\DatabaseDataProviderInterface) {
             $this->dataProvider->blockIp($ip);
+            $this->blacklist[] = $ip;
         }
     }
 
@@ -39,6 +40,7 @@ class IPFilterService implements Interfaces\IPFilterServiceInterface
     {
         if ($this->dataProvider instanceof Interfaces\DatabaseDataProviderInterface) {
             $this->dataProvider->unblockIp($ip);
+            $this->blacklist = array_diff($this->blacklist, [$ip]);
         }
     }
 
@@ -46,6 +48,8 @@ class IPFilterService implements Interfaces\IPFilterServiceInterface
     {
         if ($this->dataProvider instanceof Interfaces\DatabaseDataProviderInterface) {
             $this->dataProvider->whitelistIp($ip);
+            $this->whitelist[] = $ip;
+            
         }
     }
 
@@ -53,6 +57,7 @@ class IPFilterService implements Interfaces\IPFilterServiceInterface
     {
         if ($this->dataProvider instanceof Interfaces\DatabaseDataProviderInterface) {
             $this->dataProvider->unwhitelistIp($ip);
+            $this->whitelist = array_diff($this->whitelist, [$ip]);
         }
     }
 
@@ -60,6 +65,7 @@ class IPFilterService implements Interfaces\IPFilterServiceInterface
     {
         if ($this->dataProvider instanceof Interfaces\DatabaseDataProviderInterface) {
             $this->dataProvider->blacklistIp($ip);
+            $this->blacklist[] = $ip;
         }
     }
 
@@ -67,6 +73,7 @@ class IPFilterService implements Interfaces\IPFilterServiceInterface
     {
         if ($this->dataProvider instanceof Interfaces\DatabaseDataProviderInterface) {
             $this->dataProvider->unblacklistIp($ip);
+            $this->blacklist = array_diff($this->blacklist, [$ip]);
         }
     }
 
