@@ -2,29 +2,20 @@
 
 namespace VoyagerInc\SimpleBlockBlacklistAndWhiteListIp\Services;
 
+use VoyagerInc\SimpleBlockBlacklistAndWhiteListIp\Services\Interfaces\DataProviderInterface;
+
 class IPFilterService implements Interfaces\IPFilterServiceInterface
 {
     protected $whitelist = [];
     protected $blacklist = [];
+    protected $dataProvider;
 
-    public function __construct()
+    public function __construct(DataProviderInterface $dataProvider)
     {
-        $this->loadFromConfig();
+        $this->whitelist = $dataProvider->getWhitelist();
+        $this->blacklist = $dataProvider->getBlacklist();
 
-        if (config('simple_block_blacklist_and_whitelist_ip.block_by') === 'database') {
-            $this->loadFromDatabase();
-        }
-    }
-
-    protected function loadFromConfig()
-    {
-        $this->whitelist = config('simple_block_blacklist_and_whitelist_ip.whitelist_ip', []);
-        $this->blacklist = config('simple_block_blacklist_and_whitelist_ip.blacklist_ip', []);
-    }
-
-    protected function loadFromDatabase()
-    {
-        // Load from database
+        $this->dataProvider = $dataProvider;
     }
 
     public function isWhitelisted($ip)
@@ -35,5 +26,56 @@ class IPFilterService implements Interfaces\IPFilterServiceInterface
     public function isBlacklisted($ip)
     {
         return in_array($ip, $this->blacklist);
+    }
+
+    public function blockIp($ip)
+    {
+        if ($this->dataProvider instanceof Interfaces\DatabaseDataProviderInterface) {
+            $this->dataProvider->blockIp($ip);
+        }
+    }
+
+    public function unblockIp($ip)
+    {
+        if ($this->dataProvider instanceof Interfaces\DatabaseDataProviderInterface) {
+            $this->dataProvider->unblockIp($ip);
+        }
+    }
+
+    public function whitelistIp($ip)
+    {
+        if ($this->dataProvider instanceof Interfaces\DatabaseDataProviderInterface) {
+            $this->dataProvider->whitelistIp($ip);
+        }
+    }
+
+    public function unwhitelistIp($ip)
+    {
+        if ($this->dataProvider instanceof Interfaces\DatabaseDataProviderInterface) {
+            $this->dataProvider->unwhitelistIp($ip);
+        }
+    }
+
+    public function blacklistIp($ip)
+    {
+        if ($this->dataProvider instanceof Interfaces\DatabaseDataProviderInterface) {
+            $this->dataProvider->blacklistIp($ip);
+        }
+    }
+
+    public function unblacklistIp($ip)
+    {
+        if ($this->dataProvider instanceof Interfaces\DatabaseDataProviderInterface) {
+            $this->dataProvider->unblacklistIp($ip);
+        }
+    }
+
+    public function isBlocked($ip)
+    {
+        if ($this->dataProvider instanceof Interfaces\DatabaseDataProviderInterface) {
+            return $this->dataProvider->isBlocked($ip);
+        }
+
+        return false;
     }
 }

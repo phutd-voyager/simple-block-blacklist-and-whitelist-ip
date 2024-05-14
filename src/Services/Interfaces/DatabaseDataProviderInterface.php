@@ -2,12 +2,8 @@
 
 namespace VoyagerInc\SimpleBlockBlacklistAndWhiteListIp\Services\Interfaces;
 
-interface IPFilterServiceInterface
+interface DatabaseDataProviderInterface extends DataProviderInterface
 {
-    public function isWhitelisted($ip);
-    public function isBlacklisted($ip);
-
-    // Methods for database actions
     public function blockIp($ip);
     public function unblockIp($ip);
     public function whitelistIp($ip);
