@@ -30,6 +30,8 @@ class IPFilterService implements Interfaces\IPFilterServiceInterface
 
     public function blockIp($ip)
     {
+        $this->checkProvider();
+
         if ($this->dataProvider instanceof Interfaces\DatabaseDataProviderInterface) {
             $this->dataProvider->blockIp($ip);
             $this->blacklist[] = $ip;
@@ -38,6 +40,8 @@ class IPFilterService implements Interfaces\IPFilterServiceInterface
 
     public function unblockIp($ip)
     {
+        $this->checkProvider();
+
         if ($this->dataProvider instanceof Interfaces\DatabaseDataProviderInterface) {
             $this->dataProvider->unblockIp($ip);
             $this->blacklist = array_diff($this->blacklist, [$ip]);
@@ -46,43 +50,50 @@ class IPFilterService implements Interfaces\IPFilterServiceInterface
 
     public function whitelistIp($ip)
     {
+        $this->checkProvider();
+
         if ($this->dataProvider instanceof Interfaces\DatabaseDataProviderInterface) {
             $this->dataProvider->whitelistIp($ip);
             $this->whitelist[] = $ip;
-            
         }
     }
 
     public function unwhitelistIp($ip)
     {
-        if ($this->dataProvider instanceof Interfaces\DatabaseDataProviderInterface) {
-            $this->dataProvider->unwhitelistIp($ip);
-            $this->whitelist = array_diff($this->whitelist, [$ip]);
-        }
+        $this->checkProvider();
+
+        $this->dataProvider->unwhitelistIp($ip);
+        $this->whitelist = array_diff($this->whitelist, [$ip]);
+
     }
 
     public function blacklistIp($ip)
     {
-        if ($this->dataProvider instanceof Interfaces\DatabaseDataProviderInterface) {
-            $this->dataProvider->blacklistIp($ip);
-            $this->blacklist[] = $ip;
-        }
+        $this->checkProvider();
+
+        $this->dataProvider->blacklistIp($ip);
+        $this->blacklist[] = $ip;
     }
 
     public function unblacklistIp($ip)
     {
-        if ($this->dataProvider instanceof Interfaces\DatabaseDataProviderInterface) {
-            $this->dataProvider->unblacklistIp($ip);
-            $this->blacklist = array_diff($this->blacklist, [$ip]);
-        }
+        $this->checkProvider();
+
+        $this->dataProvider->unblacklistIp($ip);
+        $this->blacklist = array_diff($this->blacklist, [$ip]);
     }
 
     public function isBlocked($ip)
     {
-        if ($this->dataProvider instanceof Interfaces\DatabaseDataProviderInterface) {
-            return $this->dataProvider->isBlocked($ip);
-        }
+        $this->checkProvider();
 
-        return false;
+        return $this->dataProvider->isBlocked($ip);
+    }
+
+    private function checkProvider()
+    {
+        if (!($this->dataProvider instanceof Interfaces\DatabaseDataProviderInterface)) {
+            throw new \Exception('This method is only available for database data provider');
+        }
     }
 }
