@@ -32,30 +32,24 @@ class IPFilterService implements Interfaces\IPFilterServiceInterface
     {
         $this->checkProvider();
 
-        if ($this->dataProvider instanceof Interfaces\DatabaseDataProviderInterface) {
-            $this->dataProvider->blockIp($ip);
-            $this->blacklist[] = $ip;
-        }
+        $this->dataProvider->blockIp($ip);
+        $this->blacklist[] = $ip;
     }
 
     public function unblockIp($ip)
     {
         $this->checkProvider();
 
-        if ($this->dataProvider instanceof Interfaces\DatabaseDataProviderInterface) {
-            $this->dataProvider->unblockIp($ip);
-            $this->blacklist = array_diff($this->blacklist, [$ip]);
-        }
+        $this->dataProvider->unblockIp($ip);
+        $this->blacklist = array_diff($this->blacklist, [$ip]);
     }
 
     public function whitelistIp($ip)
     {
         $this->checkProvider();
 
-        if ($this->dataProvider instanceof Interfaces\DatabaseDataProviderInterface) {
-            $this->dataProvider->whitelistIp($ip);
-            $this->whitelist[] = $ip;
-        }
+        $this->dataProvider->whitelistIp($ip);
+        $this->whitelist[] = $ip;
     }
 
     public function unwhitelistIp($ip)
